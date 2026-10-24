@@ -1,0 +1,132 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #0b0f19;
+    color: #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+header {
+    background: #111827;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #1f2937;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #f3f4f6;
+}
+
+.clear-btn {
+    background: #374151;
+    color: #9ca3af;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.clear-btn:hover {
+    background: #4b5563;
+    color: #fff;
+}
+
+#chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    scroll-behavior: smooth;
+}
+
+.message {
+    max-width: 80%;
+    padding: 12px 18px;
+    border-radius: 14px;
+    line-height: 1.6;
+    word-break: break-word;
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+}
+
+.user {
+    background: #ea580c; /* Оранжевый акцент под Java */
+    color: #ffffff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.ai {
+    background: #1f2937;
+    color: #f3f4f6;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+    border: 1px solid #374151;
+}
+
+.loading {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+#input-container {
+    background: #111827;
+    padding: 15px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    border-top: 1px solid #1f2937;
+}
+
+textarea {
+    flex: 1;
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    outline: none;
+    resize: none;
+    font-size: 1rem;
+    max-height: 120px;
+    line-height: 1.4;
+}
+
+textarea:focus {
+    border-color: #ea580c;
+}
+
+#send-btn {
+    background: #ea580c;
+    color: white;
+    border: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+#send-btn:hover {
+    background: #c2410c;
+}
