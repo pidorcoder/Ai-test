@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unrestricted Java AI System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo">☕ Свободная ИИ Система (Java Backend)</div>
+        <button class="clear-btn" onclick="clearMemory()">Очистить память</button>
+    </header>
+
+    <div id="chat-container">
+        <div class="message ai">Система на Java инициализирована. Задавайте любые вопросы без ограничений.</div>
+    </div>
+
+    <div id="input-container">
+        <textarea id="user-input" placeholder="Введите ваш запрос..." rows="1" autofocus></textarea>
+        <button id="send-btn" onclick="sendMessage()">➤</button>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+
+        userInput.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            appendMessage(text, 'user');
+            userInput.value = '';
+            scrollToBottom();
+
+            const loadingId = appendMessage('Java-сервер обрабатывает запрос...', 'ai loading');
+
+            try {
+                const response = await fetch('http://localhost:8000/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: text })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
+                appendMessage(data.response, 'ai');
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                appendMessage('Ошибка соединения с Java бэкендом (Spring Boot).', 'ai');
+            }
+            scrollToBottom();
+        }
+
+        async function clearMemory() {
+            try {
+                await fetch('http://localhost:8000/api/memory', { method: 'DELETE' });
+                chatContainer.innerHTML = '<div class="message ai">Память диалога очищена.</div>';
+            } catch (e) {
+                alert('Не удалось очистить память сервера.');
+            }
+        }
+
+        function appendMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+            const id = 'msg_' + Date.now() + Math.random();
+            msgDiv.id = id;
+            msgDiv.innerText = text;
+            chatContainer.appendChild(msgDiv);
+            scrollToBottom();
+            return id;
+        }
+
+        function scrollToBottom() {
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+    </script>
+</body>
+</html>
